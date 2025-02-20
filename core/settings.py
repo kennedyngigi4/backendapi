@@ -140,6 +140,9 @@ DATABASES = {
         'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }, 
     'courses': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -148,6 +151,9 @@ DATABASES = {
         'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     },
     'competitions': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -156,6 +162,9 @@ DATABASES = {
         'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     },
     'payments': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -164,6 +173,9 @@ DATABASES = {
         'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
