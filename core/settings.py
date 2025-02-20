@@ -136,32 +136,32 @@ DATABASES = {
     'accounts': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'elearning_accounts',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'USER': 'salim_accounts',
+        'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
     }, 
     'courses': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'elearning_courses',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'USER': 'salim_accounts',
+        'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
     },
     'competitions': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'elearning_competitions',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'USER': 'salim_accounts',
+        'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
     },
     'payments': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'elearning_payments',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
+        'USER': 'salim_accounts',
+        'PASSWORD': 'elearning@2050',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -222,15 +222,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
-
-
-
-
-
-
-
-
-
-
-
-
