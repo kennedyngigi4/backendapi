@@ -1,0 +1,18 @@
+# ignored files and folders
+
+/env
+/instructor
+/manager
+/media
+/website
+
+
+# Files
+.env*
+
+# misc
+.DS_Store
+
+
+
+
