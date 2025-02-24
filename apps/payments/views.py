@@ -4,6 +4,7 @@ from rest_framework import generics, viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
+from apps.courses.models import UserCourse
 from apps.payments.models import *
 from apps.payments.serializers import *
 
@@ -18,12 +19,16 @@ class StudentPaymentView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         try:
-            serializer = PaymentSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(status.HTTP_201_CREATED)
+            purchaseExists = UserCourse.objects.filter(course=request.data['course_id'], user_id=request.data['user_id']).exists()
+            if purchaseExists:
+                return Response(status.HTTP_409_CONFLICT)
             else:
-                return Response(status.HTTP_406_NOT_ACCEPTABLE)
+                serializer = PaymentSerializer(data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(status.HTTP_201_CREATED)
+                else:
+                    return Response(status.HTTP_406_NOT_ACCEPTABLE)
         except:
             return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
 

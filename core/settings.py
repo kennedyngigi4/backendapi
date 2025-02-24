@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-from decouple import config
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,19 +11,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "http://localhost:4000",
-]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
+
+
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'django_filters',
 
     'apps.accounts.apps.AccountsConfig',
     'apps.competitions.apps.CompetitionsConfig',
@@ -134,58 +132,43 @@ DATABASES = {
         
     }, 
     'accounts': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'elearning_accounts',
-        'USER': 'salim_accounts',
-        'PASSWORD': 'elearning@2050',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'ENGINE': config("ENGINE"),
+        'NAME': config("ACCOUNTS_NAME"),
+        'USER': config("ACCOUNTS_USER"),
+        'PASSWORD': config("ACCOUNTS_PASSWORD"),
+        'HOST': config("HOST"),
+        'PORT': config("PORT"),
     }, 
     'courses': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'elearning_courses',
-        'USER': 'salim_accounts',
-        'PASSWORD': 'elearning@2050',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'ENGINE': config("ENGINE"),
+        'NAME': config("COURSES_NAME"),
+        'USER': config("COURSES_USER"),
+        'PASSWORD': config("COURSES_PASSWORD"),
+        'HOST': config("HOST"),
+        'PORT': config("PORT"),
+        
     },
     'competitions': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'elearning_competitions',
-        'USER': 'salim_accounts',
-        'PASSWORD': 'elearning@2050',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'ENGINE': config("ENGINE"),
+        'NAME': config("COMPETITIONS_NAME"),
+        'USER': config("COMPETITIONS_USER"),
+        'PASSWORD': config("COMPETITIONTS_PASSWORD"),
+        'HOST': config("HOST"),
+        'PORT': config("PORT"),
+        
     },
     'payments': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'elearning_payments',
-        'USER': 'salim_accounts',
-        'PASSWORD': 'elearning@2050',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        'ENGINE': config("ENGINE"),
+        'NAME': config("PAYMENTS_NAME"),
+        'USER': config("PAYMENTS_USER"),
+        'PASSWORD': config("PAYMENTS_PASSWORD"),
+        'HOST': config("HOST"),
+        'PORT': config("PORT"),
     }
 }
 
 
-DATABASE_ROUTERS = [
-    'routers.db_routers.AuthRouter',
-    'routers.db_routers.Courses',
-    'routers.db_routers.Competitions',
-    'routers.db_routers.Payments',
-]
+DATABASE_ROUTERS = config("DATABASE_ROUTERS", cast=Csv())
 
 
 # Password validation
@@ -234,3 +217,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
+
+
+#EMAIL SETTINGS
+EMAIL_BACKEND = config("EMAIL_BACKEND")
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", default=False, cast=bool)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+
+
+
+
+
+
