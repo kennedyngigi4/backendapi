@@ -5,7 +5,7 @@
 /manager
 /media
 /website
-
+static/
 
 # Files
 .env*
