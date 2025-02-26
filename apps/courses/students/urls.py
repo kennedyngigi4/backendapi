@@ -9,5 +9,6 @@ urlpatterns = [
     path( 'chapter_details/<str:pk>', ChapterDetailsView.as_view(), name='chapter_details', ),
     path( 'progress_update/<str:pk>', ProgressUpdateView.as_view(), name='progress_update', ),
     path( 'course_completion/<str:pk>', CourseCompletionView.as_view(), name='course_completion', ),
+    path( 'unenroll/<str:pk>/', StudentUnenroll.as_view(), name="unenroll", ),
 ]
 

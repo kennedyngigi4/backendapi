@@ -123,8 +123,29 @@ class UserCourse(models.Model):
     certificate_url = models.CharField(max_length=255, null=True, blank=True)
     enrolled_at = models.DateTimeField(auto_now_add=True)
 
+    def certificatePath(self):
+        if self.certificate_url is not None:
+            main_path = str(self.certificate_url)
+            index = main_path.find("/media")
+            path = main_path[index:] if index != -1 else main_path
+            return f"{path}"
+        
+
     def __str__(self):
         return str(self.id)
 
+
+
+class OnlineClass(models.Model):
+    class_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    title = models.CharField(max_length=255, null=True)
+    schedule = models.DateTimeField(null=True, blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    description = models.TextField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return f"{self.course} - {self.schedule}"
 
 

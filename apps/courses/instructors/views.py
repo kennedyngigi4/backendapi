@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.courses.models import *
 from apps.courses.serializers import *
-
+from apps.courses.instructors.instructor_serializers import *
 
 
 class AssignedCourses(generics.ListAPIView):
@@ -21,7 +21,6 @@ class AssignedCourses(generics.ListAPIView):
 
 
 class CourseViewSet(viewsets.ViewSet):
-
     def create(self, request):
         try:
             if self.request.user.role == "Instructor" and self.request.user.is_verified:
@@ -54,6 +53,7 @@ class CourseViewSet(viewsets.ViewSet):
             if self.request.user.role == "Instructor" and self.request.user.is_verified:
                 queryset = Course.objects.all()
                 course = get_object_or_404(queryset, course_id=pk)
+                
                 if course:
                     serializer = CourseSerializer(course)
                     return Response(serializer.data)
@@ -72,9 +72,6 @@ class CourseViewSet(viewsets.ViewSet):
                 print(request.data)
                 course = Course.objects.get(course_id=pk)
                 serializer = CourseSerializer(instance=course, data=request.data)
-
-                
-
                 if serializer.is_valid():
                     
                     serializer.save()
@@ -188,4 +185,24 @@ class ChapterViewSet(viewsets.ViewSet):
 
 
 
+class InstructorStudentsView(generics.ListAPIView):
+    serializer_class = PurchasedCoursesSerializer
+    permission_classes = [ IsAuthenticated ]
+
+
+    def get_queryset(self):
+        courses = UserCourse.objects.filter(course__instructor=self.request.user.uid)
+        return courses
+
+
+
+
+class InstructorStudentCourseView(generics.ListAPIView):
+    serializer_class = StudentPurchasedCourseSerializer
+    permission_classes = [ IsAuthenticated ]
+
+    def get_queryset(self):
+        instructor = self.request.user
+        queryset = UserCourse.objects.filter(course__instructor=instructor).distinct("user_id")
+        return queryset
 

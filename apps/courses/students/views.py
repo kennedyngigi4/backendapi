@@ -75,3 +75,18 @@ class CourseCompletionView(generics.RetrieveUpdateAPIView):
 
 
 
+class StudentUnenroll(generics.DestroyAPIView):
+    permission_classes = [ IsAuthenticated ]
+    serializer_class = UserCourseSerializer
+    queryset = UserCourse.objects.all()
+
+
+    def delete(self, request, *args, **kwargs):
+        enrolled_course = UserCourse.objects.get(id=self.kwargs["pk"], user_id=self.request.user.uid)
+        course_deleted = enrolled_course.delete()
+        if course_deleted:
+            return Response(status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status.HTTP_400_BAD_REQUEST)
+
+

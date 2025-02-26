@@ -8,7 +8,7 @@ urlpatterns = [
     path('api/account/', include('apps.accounts.urls')),
     path('api/account/manager/', include('apps.accounts.managers.urls')),
     path('api/courses/manager/', include("apps.courses.managers.urls")),
-    path('api/courses/instructor/', include('apps.courses.instructors.urls')),
+    path('api/courses/instructor/', include('apps.courses.instructors.urls'),),
     
     path( 'api/courses/', include('apps.courses.urls')),
 ]

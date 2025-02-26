@@ -40,7 +40,7 @@ class UserCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserCourse
         fields = [
-            'id', 'user_id', 'course', 'progress', 'is_complete', 'completed_at', 'certificate_url', 'enrolled_at', 'course_title', 'course_category'
+            'id', 'user_id', 'course', 'progress', 'is_complete', 'completed_at', 'certificate_url', 'certificatePath', 'enrolled_at', 'course_title', 'course_category'
         ]
 
 
@@ -50,6 +50,15 @@ class UserCourseSerializer(serializers.ModelSerializer):
 
     def get_course_category(self, obj):
         return obj.course.category
+
+
+
+class OnlineClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OnlineClass
+        fields = [
+            "class_id", "title", "schedule", "course", "description", "created_at", "created_by"
+        ]
 
 
 
