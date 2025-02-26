@@ -57,7 +57,7 @@ class OnlineClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = OnlineClass
         fields = [
-            "class_id", "title", "schedule", "course", "description", "created_at", "created_by"
+            "class_id", "schedule", "course", "description", "created_at", "created_by"
         ]
 
 

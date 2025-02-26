@@ -138,7 +138,6 @@ class UserCourse(models.Model):
 
 class OnlineClass(models.Model):
     class_id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    title = models.CharField(max_length=255, null=True)
     schedule = models.DateTimeField(null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     description = models.TextField(null=True)
